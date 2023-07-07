@@ -67,6 +67,7 @@
             (user-mail-address . "miuraken@")
             (user-login-name . "miuraken")
             (create-lockfiles . nil)
+            (vc-follow-symlinks . t)
             (debug-on-error . t)
             (init-file-debug . t)
             (frame-resize-pixelwise . t)

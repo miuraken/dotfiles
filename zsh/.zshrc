@@ -12,7 +12,7 @@ export PAGER=less
 export WORDCHARS='*?_.[]~-=&;!#$%^(){}<>'
 export GREP_COLORS='mt=1;31'
 export LS_COLORS='di=01;36'
-
+export TMUX_BG=`echo -n mrakn | gzip -1 -c | tail -c8 | hexdump -n4 -e '"%u"'|awk '{$1=$1%128+128;printf "colour%d", $0}'`
 alias grep='grep --color'
 alias ls='ls -v --color'
 alias rm='rm -i'
@@ -139,27 +139,18 @@ alias -g C='2>&1 |perl -pe "s/^(INFO|ERROR|WARNING|DEBUG)(\s+\S+\s\S+)([^\]]+\])
 autoload -Uz url-quote-magic
 zle -N self-insert url-quote-magic
 
-###BEGIN SSH-AGENT ENVIRONMENT SETUP###
-# determine if ssh-agent is running properly
- ssh-add -l > /dev/null 2>&1
- if [ $? != 0 ]; then
-  export SSH_AGENT_FILE=$HOME/.ssh/agent-stuff.$HOSTNAME
-   # Copy the existing agent stuff into the environment
-  . $SSH_AGENT_FILE
- fi
-
- # again determine if ssh-agent is running properly
- ssh-add -l > /dev/null 2>&1
- if [ $? != 0 ]; then
-     # start ssh-agent, and put stuff into the environment
-   ssh-agent | /bin/grep -v "^echo Agent pid" > $SSH_AGENT_FILE
-    . $SSH_AGENT_FILE
-  # add your keys to ssh-agent
-  ssh-add
- fi
-###END SSH-AGENT ENVIRONMENT SETUP ###
+#begin ssh-agent environment
+[ -s "$HOME/bin/ssh-add-check.sh" ] && \. "$HOME/bin/ssh-add-check.sh" &|
 
 [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"
+
+if [ ! -f ~/.zshrc.zwc -o ~/.zshrc -nt ~/.zshrc.zwc ]; then
+   zcompile ~/.zshrc
+fi
+
+if [ ! -f ~/.zshrc.local.zwc -o ~/.zshrc -nt ~/.zshrc.local.zwc ]; then
+   zcompile ~/.zshrc.local
+fi
 
 [ -s "$HOME/.zshrc.local" ] && source ~/.zshrc.local
 
