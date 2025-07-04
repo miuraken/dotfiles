@@ -148,8 +148,8 @@ if [ ! -f ~/.zshrc.zwc -o ~/.zshrc -nt ~/.zshrc.zwc ]; then
    zcompile ~/.zshrc
 fi
 
-if [ ! -f ~/.zshrc.local.zwc -o ~/.zshrc -nt ~/.zshrc.local.zwc ]; then
-   zcompile ~/.zshrc.local
+if [ -f ~/.zshrc.local ] && ([ ! -f ~/.zshrc.local.zwc -o ~/.zshrc.local -nt ~/.zshrc.local.zwc ]); then
+    zcompile ~/.zshrc.local
 fi
 
 [ -s "$HOME/.zshrc.local" ] && source ~/.zshrc.local
