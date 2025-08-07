@@ -1,6 +1,6 @@
-Use `stow` to install.
-
-```
-git clone ssh://git@ssh.github.com:443/miuraken/dotfiles.git
+This dotfile setting uses `stow` to install configs.
+```sh
 stow -R -v -d ./dotfiles -t ~ zsh emacs tmux ssh
 ```
+
+Just run [setup.sh](setup.sh).
