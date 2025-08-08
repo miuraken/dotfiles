@@ -4,7 +4,7 @@ export LD_LIBRARY_PATH=/usr/local/lib
 
 export LESS='-i -M -R'
 export TMPDIR=/tmp
-export LANG=en_US.utf8
+export LANG=en_US.UTF-8
 export LC_CTYPE=ja_JP.UTF-8 
 export LC_MESSAGES=en_US.UTF-8
 export MAIL=~/Maildir
@@ -116,6 +116,11 @@ clear-screen-rehash() {
 zle -N clear-screen-rehash
 bindkey '^L' clear-screen-rehash
 
+# Ctrl-O でviで編集
+autoload -Uz edit-command-line
+zle -N edit-command-line
+bindkey "^O" edit-command-line
+
 #for emacs shell-mode
 if [[ $EMACS = t ]]; then
     PROMPT='%~ $'
@@ -158,3 +163,6 @@ fi
 if (which zprof > /dev/null 2>&1) ;then
     zprof
 fi
+
+export NVM_DIR="$HOME/.nvm"
+[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
